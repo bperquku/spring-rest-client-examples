@@ -1,6 +1,5 @@
 package guru.springframework.springrestclientexamples.controllers;
 
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,36 +13,40 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.BodyInserters;
 
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserControllerTest {
 
-  @Autowired ApplicationContext applicationContext;
+    @Autowired
+    ApplicationContext applicationContext;
 
-  WebTestClient webTestClient;
+    WebTestClient webTestClient;
 
-  @Before
-  public void setUp() throws Exception {
-    webTestClient = WebTestClient.bindToApplicationContext(applicationContext).build();
-  }
+    @Before
+    public void setUp() throws Exception {
+        webTestClient = WebTestClient.bindToApplicationContext(applicationContext).build();
+    }
 
-  @Test
-  public void testIndex() throws Exception {
-    webTestClient.get().uri("/").exchange().expectStatus().isOk();
-  }
+    @Test
+    public void index() throws Exception {
 
-  @Test
-  public void testFormPost() throws Exception {
-    MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
-    formData.add("limit", "3");
+        webTestClient.get().uri("/")
+                .exchange()
+                .expectStatus().isOk();
+    }
 
-    webTestClient
-        .post()
-        .uri("users")
-        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-        .body(BodyInserters.fromFormData(formData))
-        .exchange()
-        .expectStatus()
-        .isOk();
-  }
+    @Test
+    public void formPost() throws Exception {
+
+        MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
+        formData.add("limit", "3");
+
+        webTestClient.post().uri("users")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .body(BodyInserters.fromFormData(formData))
+                .exchange()
+                .expectStatus().isOk();
+    }
+
 }
