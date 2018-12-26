@@ -39,5 +39,9 @@ jobs:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
+      - run:
+          name: chmod permissions
+          command: chmod +x ./gradlew
+
       # run tests!
       - run: mvn integration-test
